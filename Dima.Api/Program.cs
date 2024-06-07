@@ -2,8 +2,15 @@ using Dima.Core.Enums;
 using Dima.Core.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(x=>
+{
+    x.CustomSchemaIds(n=>n.FullName);//Full Qualifield Name
+});
 
+var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 //Endpoints->Url para Acesso
 app.MapPost(
