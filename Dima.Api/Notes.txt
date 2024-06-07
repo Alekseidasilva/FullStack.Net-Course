@@ -25,3 +25,11 @@ Duas coisas que ajudam muito sao:
 --Os methos sao seguimentando pela classificacao de Metodo
 --Usar no Plural
 -
+
+Versionamento
+Diveros FrontEnds
+//App -> Apple Store -> Produtos
+->Quebrar (Actualuzar o App inluindo a descricao)
+//2 dias para publicar na AppStore
+//Contratos->Quebrou o Contrato
+Antes nnao precisava, agora precisa
