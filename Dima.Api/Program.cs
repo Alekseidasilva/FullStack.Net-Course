@@ -7,7 +7,7 @@ builder.Services.AddSwaggerGen(x=>
 {
     x.CustomSchemaIds(n=>n.FullName);//Full Qualifield Name
 });
-
+builder.Services.AddTransient<Handler>();
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -20,7 +20,7 @@ app.MapPost(
     .WithName("Transations : Create")
     .WithSummary("Cria uma nova Transacao")
     .Produces<Response>();
-    
+
 
 
 
