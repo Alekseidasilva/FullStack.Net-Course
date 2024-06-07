@@ -1,3 +1,4 @@
+using Dima.Api.Mappings;
 using Dima.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ public class AppDbContext:DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    modelBuilder.ApplyConfiguration(new);
+    modelBuilder.ApplyConfiguration(new CategoryMappings());
+    modelBuilder.ApplyConfiguration(new TransationMappings());
   }
 }
