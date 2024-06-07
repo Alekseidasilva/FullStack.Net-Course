@@ -1,0 +1,13 @@
+﻿//Request - Requisicao
+//Obter, Criar,Actualizar e Excluir->CRUD
+//GET (Nao tem Corpo)
+//Requisicao -> Cabecario e Corpo
+    //localhost:5000/v1/categories/1
+//POST,PUT,DELE (Normalmente nao tem corpo)
+//JSON - Javascript Object Notation
+//Binding-> Vinculo, ligacao, elo
+//Transformar o objecto JSON em um Onjecto C#
+
+Response - Respota da Requisicao
+Cabecario e Corpo
+Status code - 404, 40
