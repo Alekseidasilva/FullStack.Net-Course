@@ -11,3 +11,17 @@
 Response - Respota da Requisicao
 Cabecario e Corpo
 Status code - 404, 40
+
+
+//Endpoints->Url para Acesso
+app.MapGet("/", () => "Hello World!");
+app.MapPost("/", () => "Hello World!");
+app.MapPut("/", () => "Hello World!");
+app.MapDelete("/", () => "Hello World!");
+
+Padronizacaso
+Duas coisas que ajudam muito sao:
+-Convencoes de Mercado :
+--Os methos sao seguimentando pela classificacao de Metodo
+--Usar no Plural
+-
