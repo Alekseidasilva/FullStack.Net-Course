@@ -1,0 +1,13 @@
+﻿-Models
+-Mapeamento - relacao dos models com as tabelas do DB
+-Migrations
+
+
+Dima.Core - Class Lib(??)
+
+Dima.Infra - Class Lib (??)
+-Ref. Dima.Core
+-EntityFramwwork.Core
+
+Dima.Pwa - Blazor Wasm (Cliente)
+Dima.API - Api(Servidor)
