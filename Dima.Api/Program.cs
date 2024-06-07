@@ -7,13 +7,13 @@ var app = builder.Build();
 
 //Endpoints->Url para Acesso
 app.MapPost(
-    "/v1/Transitions",
-    (Request request) => new Response
-    {
-        Id = 2,
-        Title = "Nova Transacao"
-    }).Produces<Response>();
-
+        "/v1/Transitions",
+        (Request request, Handler handler)
+            => handler.Handle(request))
+    .WithName("Transations : Create")
+    .WithSummary("Cria uma nova Transacao")
+    .Produces<Response>();
+    
 
 
 
@@ -38,3 +38,17 @@ public class Response()
     
 }
 //Hanbler
+public class Handler
+{
+    public Response Handle(Request request)
+    {
+        //Faz todo Processo de Criacao
+        //Persiste no Banco
+        return new Response
+        {
+          Id = 4,
+          Title = request.Title
+        };
+    }
+}
+
