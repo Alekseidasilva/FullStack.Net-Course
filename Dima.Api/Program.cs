@@ -28,33 +28,33 @@ app.UseSwaggerUI();
 
 //Endpoints->Url para Acesso
 app.MapPost(
-        "/v1/categories",
-        (CreateCategoryRequest request, ICategoryHandler handler)
-            => handler.CreateAsync(request))
+        "/v1/categories", async (CreateCategoryRequest request, ICategoryHandler handler)
+            => await handler.CreateAsync(request))
     .WithName("Categories : Create")
     .WithSummary("Cria uma nova Categoria")
     .Produces<Response<Category?>>();
 app.MapPut(
-        "/v1/categories/{id}",
-        (long id,
+        "/v1/categories/{id}", async (long id,
                 UpdateCategoryRequest request, ICategoryHandler handler)
             =>
         {
             request.Id = id;
-            handler.UpdateAsync(request);
+        await  handler.UpdateAsync(request);
         })
     .WithName("Categories : Update")
     .WithSummary("Actualiza uma nova Categoria")
     .Produces<Response<Category?>>();
 
 app.MapDelete(
-        "/v1/categories/{id}",
-        (long id,
-                DeleteCategoryRequest request, ICategoryHandler handler)
+        "/v1/categories/{id}", async (long id,
+                ICategoryHandler handler)
             =>
         {
-            request.Id = id;
-             handler.DeleteAsync(request);
+            var request = new DeleteCategoryRequest
+            {
+                Id = id
+            };
+            return await handler.DeleteAsync(request);
         })
     .WithName("Categories : Delete")
     .WithSummary("exclui uma  Categoria")
