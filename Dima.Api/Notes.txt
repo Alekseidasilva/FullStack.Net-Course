@@ -33,3 +33,12 @@ Diveros FrontEnds
 //2 dias para publicar na AppStore
 //Contratos->Quebrou o Contrato
 Antes nnao precisava, agora precisa
+
+
+dotnet user-secrets init
+Set UserSecretsId to 'add63d4a-f248-4d08-8d91-6fc87cd76e8e' for MSBuild project 'C:\Dev\Dima\Dima.Api\Dima.Api.csproj'.
+
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Database=Dima-Dev;User ID=sa;Password=049222Xp12;Trusted_Connection=False; TrustServerCertificate=True;" 
+
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Database=Dima-Dev;User ID=sa;Password=049222Xp12;Trusted_Connection=False; TrustServerCertificate=True;"
+Successfully saved ConnectionStrings:DefaultConnection = Server=localhost,1433;Database=Dima-Dev;User ID=sa;Password=049222Xp12;Trusted_Connection=False; TrustServerCertificate=True; to the secret store.
