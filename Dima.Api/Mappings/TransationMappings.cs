@@ -18,7 +18,7 @@ public class TransationMappings:IEntityTypeConfiguration<Transation>
             .IsRequired()
             .HasColumnType("smallint");
         builder.Property(x => x.Amount)
-            .IsRequired(false)
+           // .IsRequired(false)
             .HasColumnType("money")
             .HasMaxLength(255);
         builder.Property(x => x.CreatedAt)
