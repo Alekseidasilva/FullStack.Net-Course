@@ -29,8 +29,8 @@ app.UseSwaggerUI();
 //Endpoints->Url para Acesso
 app.MapPost(
         "/v1/categories",
-        (CreateCategoryRequest request, CategoryHandler handler)
-            => handler.Handle(request))
+        (CreateCategoryRequest request, ICategoryHandler handler)
+            => handler.CreateAsync(request))
     .WithName("Categories : Create")
     .WithSummary("Cria uma nova Categoria")
     .Produces<Response<Category>>();

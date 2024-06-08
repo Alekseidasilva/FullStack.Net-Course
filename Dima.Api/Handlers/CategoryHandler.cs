@@ -3,12 +3,13 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Request.Categories;
 using Dima.Core.Response;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers;
 
 public class CategoryHandler(AppDbContext context):ICategoryHandler
 {
-    public async Task<Response<Category>> CreateAsync(CreateCategoryRequest request)
+    public async Task<Response<Category?>> CreateAsync(CreateCategoryRequest request)
     {
         try
         {
@@ -20,28 +21,48 @@ public class CategoryHandler(AppDbContext context):ICategoryHandler
             };
             await context.Categories.AddAsync(category);
             await context.SaveChangesAsync();
-            return new Response<Category>(category);
+            return new Response<Category?>(category,201,"Categoria Criada com Sucesso!");
 
         }
-        catch (Exception e)
+        catch
         {
             //Todo: Serilog
-            Console.WriteLine(e);
-            throw new Exception("Falha ao criar a Categoria");
+         return   new Response<Category?>(null, 500, "Nao foi possivel criar a Categoria");
         }
     }
 
-    public async Task<Response<Category>> UpdateAsync(UpdateCategoryRequest request)
+    public async Task<Response<Category?>> UpdateAsync(UpdateCategoryRequest request)
+    {
+        try
+        {
+            var category = await context
+                .Categories
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x =>
+                    x.Id == request.Id
+                    && x.UserId == request.UserId);
+            if (category is null)
+                return new Response<Category?>(null, 404, "Categoria nao Encontrada");
+            category.Title = request.Title;
+            category.Description = request.Description;
+            context.Categories.Update(category);
+            await context.SaveChangesAsync();
+            return new Response<Category?>(category,message:"Categoria actualizada com Sucesso!");
+        }
+        catch 
+        {
+            //Usar a estrategia  de codificar o erro como [FP079]-para facilitar a identificacao e localizaco do mesmo
+            return   new Response<Category?>(null, 500, "Nao foi possivel alterar a Categoria");
+        }
+        
+    }
+
+    public async Task<Response<Category?>> DeleteAsync(DeleteCategoryRequest request)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Response<Category>> DeleteAsync(DeleteCategoryRequest request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Response<Category>> GetByIdAsync(GetCategoryByIdRequest request)
+    public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
     {
         throw new NotImplementedException();
     }
