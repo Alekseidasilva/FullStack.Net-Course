@@ -1,3 +1,4 @@
+using Dima.Api.Common.EndPoints;
 using Dima.Api.Data;
 using Dima.Api.Handlers;
 using Dima.Core.Enums;
@@ -26,70 +27,8 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-//Endpoints->Url para Acesso
-app.MapPost(
-        "/v1/categories", async (CreateCategoryRequest request, ICategoryHandler handler)
-            => await handler.CreateAsync(request))
-    .WithName("Categories : Create")
-    .WithSummary("Cria uma nova Categoria")
-    .Produces<Response<Category?>>();
-app.MapPut(
-        "/v1/categories/{id}", async (long id,
-                UpdateCategoryRequest request, ICategoryHandler handler)
-            =>
-        {
-            request.Id = id;
-        await  handler.UpdateAsync(request);
-        })
-    .WithName("Categories : Update")
-    .WithSummary("Actualiza uma nova Categoria")
-    .Produces<Response<Category?>>();
-
-app.MapDelete(
-        "/v1/categories/{id}", async (long id,
-                ICategoryHandler handler)
-            =>
-        {
-            var request = new DeleteCategoryRequest
-            {
-                Id = id
-            };
-            return await handler.DeleteAsync(request);
-        })
-    .WithName("Categories : Delete")
-    .WithSummary("exclui uma  Categoria")
-    .Produces<Response<Category?>>();
-app.MapGet(
-        "/v1/categories/{id}", async (long id,
-                ICategoryHandler handler)
-            =>
-        {
-            var request = new GetCategoryByIdRequest()
-            {
-                Id = id
-            };
-            return await handler.GetByIdAsync(request);
-        })
-    .WithName("Categories : Get By Id")
-    .WithSummary("Recuperar uma  Categoria")
-    .Produces<Response<Category?>>();
-app.MapGet(
-        "/v1/categories", async (
-            ICategoryHandler handler) =>
-        {
-            var request = new GetAllCategoriesRequest()
-            {
-                UserId = "Aleksei da Silva"
-            };
-            return await handler.GetAllAsync(request);
-        })
-    .WithName("Categories : GetAll")
-    .WithSummary("Recuperar Todas  Categoria do Usuario")
-    .Produces<PagedResponse<List<Category>?>>();
+app.MapGet("/",()=>new {message="OK"});
+app.MapEndPoints();
 app.Run();
 
-//Validar o Request
-//Verificar se a categoria exist 
-//Inserir no Banco
-//Montar a rerspota
-//retornar a respota
+
