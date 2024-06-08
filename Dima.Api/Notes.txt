@@ -45,3 +45,6 @@ Successfully saved ConnectionStrings:DefaultConnection = Server=localhost,1433;D
 
 dotnet tool install --global dotnet-ef
 dotnet tool update --global dotnet-ef
+
+dotnet ef migrations add v1
+dotnet ef database update
