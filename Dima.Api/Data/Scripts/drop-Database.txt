@@ -1,0 +1,10 @@
+Use [master];
+go
+
+Alter Database [dima-dev] set single_user with rollback imedaite;
+go
+
+frop database [dima-dev]
+go
+
+--Admin pack for SQl
