@@ -1,5 +1,6 @@
 using Dima.Api.Data;
 using Dima.Core.Enums;
+using Dima.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,11 +24,11 @@ app.UseSwaggerUI();
 
 //Endpoints->Url para Acesso
 app.MapPost(
-        "/v1/Transitions",
+        "/v1/categories",
         (Request request, Handler handler)
             => handler.Handle(request))
-    .WithName("Transations : Create")
-    .WithSummary("Cria uma nova Transacao")
+    .WithName("Categories : Create")
+    .WithSummary("Cria uma nova Categoria")
     .Produces<Response>();
 
 
@@ -40,11 +41,7 @@ public class Request()
 {
  
     public string Title { get; set; }=String.Empty;
-    public DateTime CreatedAt { get; set; }=DateTime.Now;
-    public ETransationType Type { get; set; } = ETransationType.Withdraw;
-    public decimal Amount { get; set; }
-    public long CategoryId { get; set; }
-    public string UserId { get; set; }=String.Empty;
+    public string Description { get; set; }=String.Empty;
 }
 //Response
 public class Response()
@@ -54,16 +51,21 @@ public class Response()
     
 }
 //Hanbler
-public class Handler
+public class Handler(AppDbContext context)
 {
     public Response Handle(Request request)
     {
-        //Faz todo Processo de Criacao
-        //Persiste no Banco
+        var category = new Category
+        {
+            Title = request.Title,
+            Description = request.Description
+        };
+        context.Categories.Add(category);
+        context.SaveChanges();
         return new Response
         {
-          Id = 4,
-          Title = request.Title
+          Id =category.Id,
+          Title = category.Title
         };
     }
 }
