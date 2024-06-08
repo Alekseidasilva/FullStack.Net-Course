@@ -105,15 +105,14 @@ public class CategoryHandler(AppDbContext context):ICategoryHandler
             var query = context
                 .Categories
                 .AsNoTracking()
-                .Where(x => x.UserId == request.UserId);
+                .Where(x => x.UserId == request.UserId)
+                .OrderBy(x=>x.Title);
 
             var categories = await query
-                .Skip(request.PageSize * request.PagedNumber)
+                .Skip((request.PagedNumber-1) * request.PagedNumber)
                 .Take(request.PageSize)
                 .ToListAsync();
-
             var totalCount = await query.CountAsync();
-
             return new PagedResponse<List<Category>>(categories, totalCount, request.PagedNumber, request.PageSize);
         }
         catch
