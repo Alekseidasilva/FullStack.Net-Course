@@ -1,7 +1,17 @@
+using Dima.Api.Data;
 using Dima.Core.Enums;
 using Dima.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var cnnString = builder.Configuration.GetConnectionString("DefaultConnection")??string.Empty;
+
+builder.Services.AddDbContext<AppDbContext>(x =>
+{
+    x.UseSqlServer(cnnString);
+});
+    
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x=>
 {
