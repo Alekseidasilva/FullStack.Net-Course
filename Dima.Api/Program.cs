@@ -1,5 +1,7 @@
 using Dima.Api.Data;
+using Dima.Api.Handlers;
 using Dima.Core.Enums;
+using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Request.Categories;
 using Dima.Core.Response;
@@ -19,7 +21,7 @@ builder.Services.AddSwaggerGen(x=>
 {
     x.CustomSchemaIds(n=>n.FullName);//Full Qualifield Name
 });
-builder.Services.AddTransient<Handler>();
+builder.Services.AddTransient<ICategoryHandler,CategoryHandler>();
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -27,7 +29,7 @@ app.UseSwaggerUI();
 //Endpoints->Url para Acesso
 app.MapPost(
         "/v1/categories",
-        (CreateCategoryRequest request, Handler handler)
+        (CreateCategoryRequest request, CategoryHandler handler)
             => handler.Handle(request))
     .WithName("Categories : Create")
     .WithSummary("Cria uma nova Categoria")
