@@ -37,7 +37,6 @@ public class CategoryHandler(AppDbContext context):ICategoryHandler
         {
             var category = await context
                 .Categories
-                .AsNoTracking()
                 .FirstOrDefaultAsync(x =>
                     x.Id == request.Id
                     && x.UserId == request.UserId);
@@ -63,7 +62,6 @@ public class CategoryHandler(AppDbContext context):ICategoryHandler
         {
             var category = await context
                 .Categories
-                .AsNoTracking()
                 .FirstOrDefaultAsync(x =>
                     x.Id == request.Id
                     && x.UserId == request.UserId);
@@ -83,7 +81,21 @@ public class CategoryHandler(AppDbContext context):ICategoryHandler
 
     public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var category = await context
+                .Categories
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == "Aleksei da Silva");
+            return category is null
+                ? new Response<Category?>(category, message: "Categoria nao encontrada!")
+                : new Response<Category?>(category);
+        }
+        catch 
+        {
+            //Usar a estrategia  de codificar o erro como [FP079]-para facilitar a identificacao e localizaco do mesmo
+            return   new Response<Category?>(null, 500, "Nao foi possivel recuperar a Categoria");
+        }
     }
 
     public async Task<Response<List<Category>>> GetAllAsync(GetAllCategoriesRequest request)

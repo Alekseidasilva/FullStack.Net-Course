@@ -59,7 +59,20 @@ app.MapDelete(
     .WithName("Categories : Delete")
     .WithSummary("exclui uma  Categoria")
     .Produces<Response<Category?>>();
-
+app.MapGet(
+        "/v1/categories/{id}", async (long id,
+                ICategoryHandler handler)
+            =>
+        {
+            var request = new GetCategoryByIdRequest()
+            {
+                Id = id
+            };
+            return await handler.GetByIdAsync(request);
+        })
+    .WithName("Categories : Get By Id")
+    .WithSummary("Recuperar uma  Categoria")
+    .Produces<Response<Category?>>();
 app.Run();
 
 //Validar o Request
