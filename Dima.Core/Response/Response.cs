@@ -4,13 +4,11 @@ namespace Dima.Core.Response;
 
 public class Response<TData>
 {
-    private const int DefaultStatusCode = 200;
-    
     [JsonConstructor]
     public Response()//Construtor ParameterLess ou sem parametros
-    => _code = DefaultStatusCode;
+    => _code =Configuration.DefaultStatusCode;
     
-    public Response(TData? data,int code=DefaultStatusCode, string? message=null )
+    public Response(TData? data,int code=Configuration.DefaultStatusCode, string? message=null )
     {
         Data = data;
         _code = code;
