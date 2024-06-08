@@ -59,7 +59,26 @@ public class CategoryHandler(AppDbContext context):ICategoryHandler
 
     public async Task<Response<Category?>> DeleteAsync(DeleteCategoryRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var category = await context
+                .Categories
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x =>
+                    x.Id == request.Id
+                    && x.UserId == request.UserId);
+            if (category is null)
+                return new Response<Category?>(null, 404, "Categoria nao Encontrada");
+            
+            context.Categories.Remove(category);
+            await context.SaveChangesAsync();
+            return new Response<Category?>(category,message:"Categoria removida com Sucesso!");
+        }
+        catch 
+        {
+            //Usar a estrategia  de codificar o erro como [FP079]-para facilitar a identificacao e localizaco do mesmo
+            return   new Response<Category?>(null, 500, "Nao foi possivel excluir a Categoria");
+        }
     }
 
     public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
