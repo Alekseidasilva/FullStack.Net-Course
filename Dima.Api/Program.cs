@@ -1,11 +1,7 @@
 using Dima.Api.Common.EndPoints;
 using Dima.Api.Data;
 using Dima.Api.Handlers;
-using Dima.Core.Enums;
 using Dima.Core.Handlers;
-using Dima.Core.Models;
-using Dima.Core.Request.Categories;
-using Dima.Core.Response;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

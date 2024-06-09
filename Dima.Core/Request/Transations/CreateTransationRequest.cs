@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using Dima.Core.Enums;
-using Dima.Core.Models;
 
 namespace Dima.Core.Request.Transations;
 
