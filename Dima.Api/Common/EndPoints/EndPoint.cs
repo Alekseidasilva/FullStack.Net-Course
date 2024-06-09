@@ -15,7 +15,12 @@ public static class EndPoint
         endpoints.MapGroup("v1/categories")
             .WithTags("Categories")
            // .RequireAuthorization()
-            .MapEndPoints<CreateCategoryEndPoint>();
+            .MapEndPoints<CreateCategoryEndPoint>()
+            .MapEndPoints<UpdateCategoryEndPoint>()
+            .MapEndPoints<DeleteCategoryEndPoint>()
+            .MapEndPoints<GetCategoryByIdEndPoint>()
+            .MapEndPoints<GetAllCategoryEndPoint>()
+            ;
     }
 
     private static IEndpointRouteBuilder MapEndPoints<TEndPoint>(this IEndpointRouteBuilder app)
