@@ -78,11 +78,31 @@ public class TransationHandler(AppDbContext context) : ITransationHandler
 
     public async Task<Response<Transation?>> GetByIdAsync(GetTransationByIdRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var transation =
+                await context.Transations.FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+            return transation is null ?
+                  new Response<Transation?>(null, 404, "Transacao nao encontrada!")
+                  : new Response<Transation?>(transation, message: "Transacao atualizada com Sucesso!");
+        }
+        catch
+        {
+            return new Response<Transation?>(null, 500, $"Nao foi possivel Obter a Transacao com o Id : {request.Id}");
+        }
     }
 
     public async Task<PagedResponse<List<Transation>>> GetByPeriodAsync(GetTransationByPeriodRequest request)
     {
-        throw new NotImplementedException();
+        var transations = await context.Transations
+             .Where(x => x.UserId == request.UserId && x.PaidOrReceivedAt >= request.StartDate && x.PaidOrReceivedAt <= request.EndDate)
+             .OrderByDescending(x => x.PaidOrReceivedAt)
+             .Skip((request.Page - 1) * request.PageSize)
+             .Take(request.PageSize)
+             .ToListAsync();
+        var total = await context.Transations
+            .Where(x => x.UserId == request.UserId && x.PaidOrReceivedAt >= request.StartDate && x.PaidOrReceivedAt <= request.EndDate)
+            .CountAsync();
+        return new PagedResponse<List<Transation>>()
     }
 }
