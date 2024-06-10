@@ -3,6 +3,7 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Request.Transations;
 using Dima.Core.Response;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers;
 
@@ -10,33 +11,69 @@ public class TransationHandler(AppDbContext context) : ITransationHandler
 {
     public async Task<Response<Transation?>> CreateAsync(CreateTransationRequest request)
     {
-        var transation = new Transation
+        try
         {
-            UserId = request.UserId,
-            CategoryId = request.CategoryId,
-            CreatedAt = DateTime.Now,
-            Amount = request.Amount,
-            PaidOrReceivedAt = request.PaidOrReceivedAt,
-            Title = request.Title,
-            Type = request.Type
-        };
-        await context.Transations.AddAsync(transation);
-        await context.SaveChangesAsync();
-        return new Response<Transation?>(transation, 201, "Transacao criada com Sucesso!");
+            var transation = new Transation
+            {
+                UserId = request.UserId,
+                CategoryId = request.CategoryId,
+                CreatedAt = DateTime.Now,
+                Amount = request.Amount,
+                PaidOrReceivedAt = request.PaidOrReceivedAt,
+                Title = request.Title,
+                Type = request.Type
+            };
+            await context.Transations.AddAsync(transation);
+            await context.SaveChangesAsync();
+            return new Response<Transation?>(transation, 201, "Transacao criada com Sucesso!");
+        }
+        catch
+        {
+            return new Response<Transation?>(null, 500, "Nao foi possivel criar a Transacao");
+        }
     }
 
     public async Task<Response<Transation?>> UpdateAsync(UpdateTransationRequest request)
     {
-        var transation = await context.Transations.FindAsync(request.Id);
-        if (transation == null)
-            return new Response<Transation?>(null, 404, "Transacao nao encontrada!");
-        transation.Title = request.Title;
+        try
+        {
+            var transation = await context.Transations.FirstOrDefaultAsync(trans => trans.Id == request.Id && trans.UserId == request.UserId);
+            if (transation == null)
+                return new Response<Transation?>(null, 404, "Transacao nao encontrada!");
+            transation.Title = request.Title;
+            transation.Amount = request.Amount;
+            transation.CategoryId = request.CategoryId;
+            transation.Type = request.Type;
+            transation.PaidOrReceivedAt = request.PaidOrReceivedAt;
+            context.Transations.Update(transation);
+            await context.SaveChangesAsync();
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            return new Response<Transation?>(transation, message: "Transacao atualizada com Sucesso!");
 
+        }
+        catch
+        {
+            return new Response<Transation?>(null, 500, "Nao foi possivel actualizar a Transacao");
+        }
     }
 
     public async Task<Response<Transation?>> DeleteAsync(DeleteTransationRequest request)
     {
-        throw new NotImplementedException();
+
+        try
+        {
+            var transation =
+                await context.Transations.FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+            if (transation == null)
+                return new Response<Transation?>(null, 404, "Transacao nao encontrada!");
+            context.Transations.Remove(transation);
+            await context.SaveChangesAsync();
+            return new Response<Transation?>(transation, message: "Transacao atualizada com Sucesso!");
+        }
+        catch
+        {
+            return new Response<Transation?>(null, 500, "Nao foi possivel excluir a Transacao");
+        }
     }
 
     public async Task<Response<Transation?>> GetByIdAsync(GetTransationByIdRequest request)
