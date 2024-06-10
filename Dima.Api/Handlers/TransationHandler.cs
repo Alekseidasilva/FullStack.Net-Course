@@ -85,7 +85,7 @@ public class TransationHandler(AppDbContext context) : ITransationHandler
                 await context.Transations.FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
             return transation is null ?
                   new Response<Transation?>(null, 404, "Transacao nao encontrada!")
-                  : new Response<Transation?>(transation, message: "Transacao atualizada com Sucesso!");
+                  : new Response<Transation?>(transation, message: "Transacao Obtida com Sucesso!");
         }
         catch
         {
