@@ -2,6 +2,7 @@ using Dima.Api.Common.EndPoints;
 using Dima.Api.Data;
 using Dima.Api.Handlers;
 using Dima.Core.Handlers;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,11 +19,19 @@ builder.Services.AddSwaggerGen(x =>
 {
     x.CustomSchemaIds(n => n.FullName);//Full Qualifield Name
 });
+
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddIdentityCookies();
+builder.Services.AddAuthorization();
+
+
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransationHandler, TransationHandler>();
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
+
+
 
 app.MapGet("/", () => new { message = "OK" });
 app.MapEndPoints();
