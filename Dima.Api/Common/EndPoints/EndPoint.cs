@@ -1,5 +1,6 @@
 using Dima.Api.Common.Api;
 using Dima.Api.Common.EndPoints.Categories;
+using Dima.Api.Common.EndPoints.Transations;
 
 namespace Dima.Api.Common.EndPoints;
 
@@ -14,12 +15,21 @@ public static class EndPoint
 
         endpoints.MapGroup("v1/categories")
             .WithTags("Categories")
-           // .RequireAuthorization()
+            // .RequireAuthorization()
             .MapEndPoints<CreateCategoryEndPoint>()
             .MapEndPoints<UpdateCategoryEndPoint>()
             .MapEndPoints<DeleteCategoryEndPoint>()
             .MapEndPoints<GetCategoryByIdEndPoint>()
             .MapEndPoints<GetAllCategoryEndPoint>()
+            ;
+        endpoints.MapGroup("v1/Transations")
+            .WithTags("Transations")
+            // .RequireAuthorization()
+            .MapEndPoints<CreateTransationEndpoint>()
+            .MapEndPoints<UpdateTransationEndpoint>()
+            .MapEndPoints<DeleteTransationEndpoint>()
+            .MapEndPoints<GetTransationByIdEndpoint>()
+            .MapEndPoints<GetTransationByPeriodEndpoint>()
             ;
     }
 
@@ -29,6 +39,6 @@ public static class EndPoint
         TEndPoint.Map(app);
         return app;
     }
-   
-    
+
+
 }
