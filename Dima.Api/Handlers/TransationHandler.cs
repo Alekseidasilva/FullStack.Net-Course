@@ -1,4 +1,5 @@
 ﻿using Dima.Api.Data;
+using Dima.Core.Common.Extensions;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Request.Transations;
@@ -94,15 +95,27 @@ public class TransationHandler(AppDbContext context) : ITransationHandler
 
     public async Task<PagedResponse<List<Transation>>> GetByPeriodAsync(GetTransationByPeriodRequest request)
     {
-        var transations = await context.Transations
-             .Where(x => x.UserId == request.UserId && x.PaidOrReceivedAt >= request.StartDate && x.PaidOrReceivedAt <= request.EndDate)
-             .OrderByDescending(x => x.PaidOrReceivedAt)
-             .Skip((request.Page - 1) * request.PageSize)
-             .Take(request.PageSize)
-             .ToListAsync();
-        var total = await context.Transations
-            .Where(x => x.UserId == request.UserId && x.PaidOrReceivedAt >= request.StartDate && x.PaidOrReceivedAt <= request.EndDate)
-            .CountAsync();
-        return new PagedResponse<List<Transation>>()
+        try
+        {
+            request.StartDate ??= DateTime.Now.GetFirstDay();
+            request.EndDate ??= DateTime.Now.GetLastDay();
+            var query = context
+                .Transations
+                .AsNoTracking()
+                .Where(x => x.CreatedAt >= request.StartDate && x.CreatedAt <= request.EndDate &&
+                            x.UserId == request.UserId)
+                .OrderBy(x => x.CreatedAt);
+            var transations = query
+                .Skip((request.PagedNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToList();
+            var count = await query.CountAsync();
+            return new PagedResponse<List<Transation>>(transations, count, request.PagedNumber, request.PageSize);
+        }
+        catch
+        {
+            return new PagedResponse<List<Transation>>(null, 500, "Nao foi possivel Listar pelo periodo selecionado!");
+        }
+
     }
 }
