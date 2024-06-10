@@ -7,13 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var cnnString = builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
-
-builder.Services.AddDbContext<AppDbContext>(x =>
-{
-    x.UseSqlServer(cnnString);
-});
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x =>
 {
@@ -23,6 +16,14 @@ builder.Services.AddSwaggerGen(x =>
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
     .AddIdentityCookies();
 builder.Services.AddAuthorization();
+var cnnString = builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
+
+builder.Services.AddDbContext<AppDbContext>(x =>
+{
+    x.UseSqlServer(cnnString);
+});
+
+
 
 
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();

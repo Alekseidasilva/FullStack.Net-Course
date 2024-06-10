@@ -1,19 +1,20 @@
-using System.Reflection;
 using Dima.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Dima.Api.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext(options)
 {
-  //public AppDbContext(DbContextOptions<AppDbContext> options):base(options) { }
-  
-  
-  public DbSet<Category> Categories { get; set; } = null!;
-  public DbSet<Transation> Transations { get; set; }= null!;
+    //public AppDbContext(DbContextOptions<AppDbContext> options):base(options) { }
 
-  protected override void OnModelCreating(ModelBuilder modelBuilder)
-  {
-    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-  }
+
+    public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Transation> Transations { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }
