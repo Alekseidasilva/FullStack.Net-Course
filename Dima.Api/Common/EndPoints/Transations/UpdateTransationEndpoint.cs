@@ -9,7 +9,7 @@ namespace Dima.Api.Common.EndPoints.Transations;
 public class UpdateTransationEndpoint : IEndPoint
 {
     public static void Map(IEndpointRouteBuilder app)
-        => app.MapPut("/{id}/{handler}", HandleAsync)
+        => app.MapPut("/{id}", HandleAsync)
             .WithName("Transations: Update")
             .WithSummary("Actualizar uma Transation")
             .WithDescription("Actualizar uma Transation")
