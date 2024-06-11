@@ -1,12 +1,14 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider @bind-IsDarkMode="IsDarkMode" Theme="Configuration.Theme" />
+<MudThemeProvider @ref="_mudThemeProvider"
+                  @bind-IsDarkMode="_isDarkMode"
+                  Theme="Configuration.Theme" />
 <MudSnackbarProvider />
 
 <MudLayout>
     <MudAppBar>
         Dima
         <MudSpacer />
-        <MudSwitch @bind-Value="IsDarkMode"></MudSwitch>
+        <MudSwitch @bind-Value="_isDarkMode"></MudSwitch>
 
     </MudAppBar>
     <MudMainContent Class="">
@@ -17,5 +19,24 @@
 </MudLayout>
 @code
 {
-    private bool IsDarkMode = true;
+    private bool _isDarkMode = true;
+    private MudThemeProvider _mudThemeProvider = null!;
+    //System Preferences Watcher
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _isDarkMode = await _mudThemeProvider.GetSystemPreference();
+            await _mudThemeProvider.WatchSystemPreference(OnSystemPreferencesChanged);
+            StateHasChanged();
+
+        }
+    }
+    private Task OnSystemPreferencesChanged(bool newValue)
+    {
+        _isDarkMode = newValue;
+        StateHasChanged(); return Task.CompletedTask;
+    }
 }
