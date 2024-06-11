@@ -8,4 +8,6 @@ public static class Configuration
 
 
     public static string ConnectionStrings { get; set; } = string.Empty;
+    public static string FrontEndUrl { get; set; } = string.Empty;
+    public static string BackEndUrl { get; set; } = string.Empty;
 }

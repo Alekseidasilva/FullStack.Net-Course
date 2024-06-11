@@ -23,7 +23,7 @@ public static class EndPoint
 
         endpoints.MapGroup("v1/categories")
             .WithTags("Categories")
-             .RequireAuthorization()
+            .RequireAuthorization()
             .MapEndPoints<CreateCategoryEndPoint>()
             .MapEndPoints<UpdateCategoryEndPoint>()
             .MapEndPoints<DeleteCategoryEndPoint>()
@@ -42,7 +42,7 @@ public static class EndPoint
         endpoints.MapGroup("v1/identity")
             .WithTags("identity")
             .MapIdentityApi<User>();
-        
+
         endpoints.MapGroup("v1/roles")
             .WithTags("roles")
             .MapEndPoints<LogOutEndpoint>()
