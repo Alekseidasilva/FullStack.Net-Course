@@ -1,8 +1,8 @@
-﻿@page "/login"
+﻿@page "/register"
 
 @layout HeadLessLayout
 
-<PageTitle>Dima - Login</PageTitle>
+<PageTitle>Dima - Register</PageTitle>
 
 <MudGrid Justify="Justify.Center">
     <MudItem xs="12" sm="12" md="8" lg="6" xl="6" xxl="6">
@@ -12,7 +12,7 @@
                      alt="Dima - Controle Financeiro"
                      width="200" />
             </div>
-            <h1>Autentica-se</h1>
+            <h1>Registrando-se</h1>
             <MudForm @ref="_mudForm">
                 <MudTextField T="string"
                               Label="email"
@@ -30,9 +30,9 @@
                               RequiredError="senha Invalida" />
             </MudForm>
             <div class="d-flex Justify-Center mt-8">
-                <MudButton Variant="Variant.Filled" Color=Color.Primary>Entrar</MudButton>
+                <MudButton Variant="Variant.Filled" Color=Color.Primary>Cadastrar</MudButton>
                 <MudSpacer />
-                <MudButton Href="/register">Registrar</MudButton>
+                <MudButton Href="/login">Ja tenho uma Conta!</MudButton>
             </div>
 
         </MudPaper>
