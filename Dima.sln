@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dima.Core", "Dima.Core\Dima
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dima.Api", "Dima.Api\Dima.Api.csproj", "{3367DD05-0FF5-473B-8E39-DA8ABE7D5466}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dima.Web", "Dima.Web\Dima.Web.csproj", "{C3C125A4-B31F-41BB-B56E-D0F48578F295}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +49,17 @@ Global
 		{3367DD05-0FF5-473B-8E39-DA8ABE7D5466}.Release|x64.Build.0 = Release|Any CPU
 		{3367DD05-0FF5-473B-8E39-DA8ABE7D5466}.Release|x86.ActiveCfg = Release|Any CPU
 		{3367DD05-0FF5-473B-8E39-DA8ABE7D5466}.Release|x86.Build.0 = Release|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Debug|x64.Build.0 = Debug|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Debug|x86.Build.0 = Debug|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Release|x64.ActiveCfg = Release|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Release|x64.Build.0 = Release|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Release|x86.ActiveCfg = Release|Any CPU
+		{C3C125A4-B31F-41BB-B56E-D0F48578F295}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
