@@ -11,7 +11,9 @@ public static class EndPoint
     {
         //Tudo que fizemos aqui, ira aplicar em todas as rotas 
         var endpoints = app
-            .MapGroup("");
+            .MapGroup("")
+            //.RequireAuthorization()
+            ;
 
         endpoints.MapGroup("v1/categories")
             .WithTags("Categories")
