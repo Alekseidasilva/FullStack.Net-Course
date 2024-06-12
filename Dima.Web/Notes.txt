@@ -1,1 +1,2 @@
 ﻿dotnet add package Microsoft.Extensions.Http
+dotnet add package Microsoft.AspnetCore.Components.WebAssembly.Authentication
