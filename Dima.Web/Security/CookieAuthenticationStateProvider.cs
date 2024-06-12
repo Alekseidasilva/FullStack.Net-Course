@@ -8,19 +8,26 @@ namespace Dima.Web.Security;
 public class CookieAuthenticationStateProvider(IHttpClientFactory clientFactory) : AuthenticationStateProvider, ICookieAuthenticationStateProvider
 {
     private readonly HttpClient _client = clientFactory.CreateClient(Configuration.HttpClientName);
-    private bool IsAuthenticated = false;
+    private bool _isAuthenticated = false;
 
     public async Task<bool> CheckAuthenticatedAsync()
     {
         await GetAuthenticationStateAsync();
-        return IsAuthenticated;
+        return _isAuthenticated;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        //User
-        //Roles=>RoleClaim
-        throw new NotImplementedException();
+        _isAuthenticated = false;
+        var user = new ClaimsPrincipal(new ClaimsIdentity());
+        var userInfo = await GetUser();
+        if (userInfo is null)
+            return new AuthenticationState(user);
+        var claims = await GetClaims(userInfo);
+        var id = new ClaimsIdentity(claims, nameof(CookieAuthenticationStateProvider));
+        user = new ClaimsPrincipal(id);
+        _isAuthenticated = true;
+        return new AuthenticationState(user);
     }
 
     public void NotifyAuthenticationStateChanged()
@@ -44,8 +51,7 @@ public class CookieAuthenticationStateProvider(IHttpClientFactory clientFactory)
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Email),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, "Admin")
+            new Claim(ClaimTypes.Email, user.Email)
         };
         claims.AddRange(user.Claims.Where(x => x.Key != ClaimTypes.Name && x.Key != ClaimTypes.Email)
             .Select(x => new Claim(x.Key, x.Value)));
