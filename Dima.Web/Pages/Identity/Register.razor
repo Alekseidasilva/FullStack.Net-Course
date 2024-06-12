@@ -1,7 +1,9 @@
 ﻿@page "/register"
 
 @layout HeadLessLayout
+@* @using Dima.Web.Security *@
 @inherits RegisterPage
+@* @inject CookieAuthenticationStateProvider autState *@
 
 <PageTitle>Dima - Register</PageTitle>
 
@@ -14,7 +16,7 @@
                      width="200" />
             </div>
             <h1>Registrando-se</h1>
-            <MudForm @ref="_mudForm">
+            <MudForm @ref="MudForm">
                 <MudTextField T="string"
                               Label="email"
                               InputType="InputType.Email"
