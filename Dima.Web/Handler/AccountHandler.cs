@@ -2,6 +2,7 @@
 using Dima.Core.Request.Account;
 using Dima.Core.Response;
 using System.Net.Http.Json;
+using System.Text;
 
 namespace Dima.Web.Handler;
 
@@ -18,11 +19,15 @@ public class AccountHandler(IHttpClientFactory hppClientFactory) : IAccountHandl
 
     public async Task<Response<string>> RegisterAsync(RegisterRequest request)
     {
-        throw new NotImplementedException();
+        var result = await _client.PostAsJsonAsync("/v1/identity/register", request);
+        return result.IsSuccessStatusCode
+            ? new Response<string>("Cadastro reliazdo com sucesso!", 201, "Cadastro reliazdo com sucesso!")
+            : new Response<string>(null, 400, "Nao foi possivel realizar o Cadastro");
     }
 
     public async Task LogoutAsync()
     {
-        throw new NotImplementedException();
+        var emptyContent = new StringContent("{}", Encoding.UTF8, "application/json");
+        await _client.PostAsync("/v1/identity/logout", emptyContent);
     }
 }
