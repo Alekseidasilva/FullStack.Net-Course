@@ -10,7 +10,10 @@ public class AccountHandler(IHttpClientFactory hppClientFactory) : IAccountHandl
     private readonly HttpClient _client = hppClientFactory.CreateClient(Configuration.HttpClientName);
     public async Task<Response<string>> LoginAsync(LoginRequest request)
     {
-        await _client.PostAsJsonAsync("/v1/identity/login", request);
+        var result = await _client.PostAsJsonAsync("/v1/identity/login?useCookies=true", request);
+        return result.IsSuccessStatusCode
+            ? new Response<string>("Login reliazdo com sucesso!", 200, "Login reliazdo com sucesso!")
+            : new Response<string>(null, 400, "Nao foi possivel realizar o login");
     }
 
     public async Task<Response<string>> RegisterAsync(RegisterRequest request)
