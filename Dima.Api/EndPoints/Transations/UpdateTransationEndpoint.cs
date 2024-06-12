@@ -5,29 +5,27 @@ using Dima.Core.Models;
 using Dima.Core.Request.Transations;
 using Dima.Core.Response;
 
-namespace Dima.Api.Common.EndPoints.Transations;
+namespace Dima.Api.EndPoints.Transations;
 
-public class GetTransationByIdEndpoint : IEndPoint
+public class UpdateTransationEndpoint : IEndPoint
 {
     public static void Map(IEndpointRouteBuilder app)
-        => app.MapGet("/{id}", HandleAsync)
-            .WithName("Transations: Get By Id")
-            .WithSummary("Recuperar uma Transacao")
-            .WithDescription("Recuperar uma Transacao")
-            .WithOrder(4)
+        => app.MapPut("/{id}", HandleAsync)
+            .WithName("Transations: Update")
+            .WithSummary("Actualizar uma Transation")
+            .WithDescription("Actualizar uma Transation")
+            .WithOrder(2)
             .Produces<Response<Transation?>>();
 
     private static async Task<IResult> HandleAsync(
         ClaimsPrincipal user,
         ITransationHandler handler,
+        UpdateTransationRequest request,
         long id)
     {
-        var request = new GetTransationByIdRequest
-        {
-            UserId = user.Identity?.Name??String.Empty,
-            Id = id
-        };
-        var result = await handler.GetByIdAsync(request);
+        request.UserId = user.Identity?.Name ?? string.Empty;
+        request.Id = id;
+        var result = await handler.UpdateAsync(request);
         return result.IsSuccess
             ? TypedResults.Ok(result)
             : TypedResults.BadRequest(result);

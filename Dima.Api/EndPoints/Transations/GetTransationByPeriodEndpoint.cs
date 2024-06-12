@@ -7,7 +7,7 @@ using Dima.Core.Request.Transations;
 using Dima.Core.Response;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dima.Api.Common.EndPoints.Transations;
+namespace Dima.Api.EndPoints.Transations;
 
 public class GetTransationByPeriodEndpoint : IEndPoint
 {
@@ -31,7 +31,7 @@ public class GetTransationByPeriodEndpoint : IEndPoint
     {
         var request = new GetTransationByPeriodRequest()
         {
-            UserId = user.Identity?.Name??String.Empty,
+            UserId = user.Identity?.Name ?? string.Empty,
             PagedNumber = pagedNumber,
             PageSize = pageSize,
             StartDate = starDate,

@@ -5,9 +5,9 @@ using Dima.Core.Models;
 using Dima.Core.Request.Categories;
 using Dima.Core.Response;
 
-namespace Dima.Api.Common.EndPoints.Categories;
+namespace Dima.Api.EndPoints.Categories;
 
-public class UpdateCategoryEndPoint:IEndPoint
+public class UpdateCategoryEndPoint : IEndPoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapPut("/{id}", HandleAsync)
@@ -23,11 +23,11 @@ public class UpdateCategoryEndPoint:IEndPoint
         UpdateCategoryRequest request,
         long id)
     {
-        request.UserId = user.Identity?.Name??String.Empty;
+        request.UserId = user.Identity?.Name ?? string.Empty;
         request.Id = id;
         var result = await handler.UpdateAsync(request);
-        return result.IsSuccess 
-            ? TypedResults.Ok(result) 
+        return result.IsSuccess
+            ? TypedResults.Ok(result)
             : TypedResults.BadRequest(result);
     }
 }

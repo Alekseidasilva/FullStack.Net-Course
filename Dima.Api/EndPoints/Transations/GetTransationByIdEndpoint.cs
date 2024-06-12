@@ -5,16 +5,16 @@ using Dima.Core.Models;
 using Dima.Core.Request.Transations;
 using Dima.Core.Response;
 
-namespace Dima.Api.Common.EndPoints.Transations;
+namespace Dima.Api.EndPoints.Transations;
 
-public class DeleteTransationEndpoint : IEndPoint
+public class GetTransationByIdEndpoint : IEndPoint
 {
     public static void Map(IEndpointRouteBuilder app)
-        => app.MapDelete("/{id}", HandleAsync)
-            .WithName("Transations: Delete")
-            .WithSummary("Excluir uma Transacao")
-            .WithDescription("Excluir uma Transacao")
-            .WithOrder(3)
+        => app.MapGet("/{id}", HandleAsync)
+            .WithName("Transations: Get By Id")
+            .WithSummary("Recuperar uma Transacao")
+            .WithDescription("Recuperar uma Transacao")
+            .WithOrder(4)
             .Produces<Response<Transation?>>();
 
     private static async Task<IResult> HandleAsync(
@@ -22,12 +22,12 @@ public class DeleteTransationEndpoint : IEndPoint
         ITransationHandler handler,
         long id)
     {
-        var request = new DeleteTransationRequest()
+        var request = new GetTransationByIdRequest
         {
-            UserId = user.Identity?.Name??String.Empty,
+            UserId = user.Identity?.Name ?? string.Empty,
             Id = id
         };
-        var result = await handler.DeleteAsync(request);
+        var result = await handler.GetByIdAsync(request);
         return result.IsSuccess
             ? TypedResults.Ok(result)
             : TypedResults.BadRequest(result);

@@ -5,9 +5,9 @@ using Dima.Core.Models;
 using Dima.Core.Request.Categories;
 using Dima.Core.Response;
 
-namespace Dima.Api.Common.EndPoints.Categories;
+namespace Dima.Api.EndPoints.Categories;
 
-public class DeleteCategoryEndPoint:IEndPoint
+public class DeleteCategoryEndPoint : IEndPoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapDelete("/{id}", HandleAsync)
@@ -24,12 +24,12 @@ public class DeleteCategoryEndPoint:IEndPoint
     {
         var request = new DeleteCategoryRequest
         {
-            UserId = user.Identity?.Name??String.Empty,
+            UserId = user.Identity?.Name ?? string.Empty,
             Id = id
         };
         var result = await handler.DeleteAsync(request);
-        return result.IsSuccess 
-            ? TypedResults.Ok(result) 
+        return result.IsSuccess
+            ? TypedResults.Ok(result)
             : TypedResults.BadRequest(result);
     }
 }

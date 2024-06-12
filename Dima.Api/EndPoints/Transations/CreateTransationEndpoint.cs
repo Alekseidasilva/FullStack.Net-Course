@@ -5,7 +5,7 @@ using Dima.Core.Models;
 using Dima.Core.Request.Transations;
 using Dima.Core.Response;
 
-namespace Dima.Api.Common.EndPoints.Transations;
+namespace Dima.Api.EndPoints.Transations;
 
 public class CreateTransationEndpoint : IEndPoint
 {
@@ -22,7 +22,7 @@ public class CreateTransationEndpoint : IEndPoint
         ITransationHandler handler,
         CreateTransationRequest request)
     {
-        request.UserId =user.Identity?.Name??String.Empty;
+        request.UserId = user.Identity?.Name ?? string.Empty;
         var result = await handler.CreateAsync(request);
         return result.IsSuccess
             ? TypedResults.Created($"/{result.Data?.Id}", result)

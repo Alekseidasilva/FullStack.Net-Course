@@ -1,10 +1,10 @@
 using Dima.Api.Common.Api;
-using Dima.Api.Common.EndPoints.Categories;
-using Dima.Api.Common.EndPoints.Identity;
-using Dima.Api.Common.EndPoints.Transations;
+using Dima.Api.EndPoints.Categories;
+using Dima.Api.EndPoints.Identity;
+using Dima.Api.EndPoints.Transations;
 using Dima.Api.Models;
 
-namespace Dima.Api.Common.EndPoints;
+namespace Dima.Api.EndPoints;
 
 public static class EndPoint
 {

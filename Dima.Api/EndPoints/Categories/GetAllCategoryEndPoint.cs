@@ -7,9 +7,9 @@ using Dima.Core.Request.Categories;
 using Dima.Core.Response;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dima.Api.Common.EndPoints.Categories;
+namespace Dima.Api.EndPoints.Categories;
 
-public class GetAllCategoryEndPoint:IEndPoint
+public class GetAllCategoryEndPoint : IEndPoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/{pageSize}/{pagedNumber}", HandleAsync)
@@ -22,20 +22,20 @@ public class GetAllCategoryEndPoint:IEndPoint
     private static async Task<IResult> HandleAsync(
         ClaimsPrincipal user,
         ICategoryHandler handler,
-        [FromQuery] int pagedNumber=Configuration.DefaultPageNumber,
-        [FromQuery] int pageSize=Configuration.DefaultPageSize
-      
+        [FromQuery] int pagedNumber = Configuration.DefaultPageNumber,
+        [FromQuery] int pageSize = Configuration.DefaultPageSize
+
       )
     {
         var request = new GetAllCategoriesRequest
         {
-            UserId = user.Identity?.Name??String.Empty,
+            UserId = user.Identity?.Name ?? string.Empty,
             PagedNumber = pagedNumber,
-            PageSize =pageSize ,
+            PageSize = pageSize,
         };
         var result = await handler.GetAllAsync(request);
-        return result.IsSuccess 
-            ? TypedResults.Ok(result) 
+        return result.IsSuccess
+            ? TypedResults.Ok(result)
             : TypedResults.BadRequest(result);
     }
 }
