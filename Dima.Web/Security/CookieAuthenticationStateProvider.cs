@@ -47,12 +47,26 @@ public class CookieAuthenticationStateProvider(IHttpClientFactory clientFactory)
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Role, "Admin")
         };
-
-        foreach (var claim in user.Claims)
+        claims.AddRange(user.Claims.Where(x => x.Key != ClaimTypes.Name && x.Key != ClaimTypes.Email)
+            .Select(x => new Claim(x.Key, x.Value)));
+        RoleClaim[]? roles;
+        try
         {
-            claims.Add(new Claim(claim.Key, claim.Value));
+
+            roles = await _client.GetFromJsonAsync<RoleClaim[]>("v1/identity/roles");
+
+        }
+        catch
+        {
+            return claims;
         }
 
+        //foreach (var role in roles ?? [])
+        //{
+        //    if (!string.IsNullOrEmpty(role.Type) && !string.IsNullOrEmpty(role.ValueType))
+        //        claims.Add(new Claim(role.Type, role.Value!, role.ValueType, role.Issuer, role.OriginalIssuer));
+        //}
+        claims.AddRange(from role in roles ?? [] where !string.IsNullOrEmpty(role.Type) && !string.IsNullOrEmpty(role.ValueType) select new Claim(role.Type, role.Value!, role.ValueType, role.Issuer, role.OriginalIssuer));
         return claims;
     }
 }
