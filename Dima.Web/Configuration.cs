@@ -6,7 +6,7 @@ namespace Dima.Web;
 public static class Configuration
 {
     public const string HttpClientName = "dima";
-    public static string BackEndUrl { get; set; }
+    public static string BackEndUrl { get; set; } = "https://localhost:5001";
     public static MudTheme Theme = new()
     {
         Typography = new Typography
@@ -14,7 +14,6 @@ public static class Configuration
             Default = new Default
             {
                 FontFamily = ["Raleway, sans-serif"],
-
             }
         },
         Palette = new PaletteLight
@@ -33,8 +32,10 @@ public static class Configuration
         {
             Primary = Colors.LightGreen.Accent3,
             Secondary = Colors.LightGreen.Darken3,
+            // Background = Colors.LightGreen.Darken4,
             AppbarBackground = Colors.LightGreen.Accent3,
             AppbarText = Colors.Shades.Black,
+            PrimaryContrastText = new MudColor("#000000")
 
         },
     };
