@@ -7,7 +7,6 @@ namespace Dima.Web.Pages.Identity;
 
 public partial class LogoutPage : ComponentBase
 {
-
     #region Dependencies
 
     [Inject]

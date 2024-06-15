@@ -55,7 +55,12 @@ public partial class LoginPage : ComponentBase
             var result = await Handler.LoginAsync(InputModel);
 
             if (result.IsSuccess)
+            {
+                await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                AuthenticationStateProvider.NotifyAuthenticationStateChanged();
                 NavigationManager.NavigateTo("/");
+            }
+
             else
                 Snackbar.Add(result.Message, Severity.Error);
         }
