@@ -18,15 +18,15 @@ public static class Configuration
         },
         Palette = new PaletteLight
         {
-            Primary = "#1EFA2D",
+            Primary = new MudColor("#1EFA2D"),
+            PrimaryContrastText = new MudColor("#000000"),
             Secondary = Colors.LightGreen.Darken3,
             Background = Colors.Grey.Lighten4,
             AppbarBackground = new MudColor("#1EFA2D"),
             AppbarText = Colors.Shades.Black,
             TextPrimary = Colors.Shades.Black,
-            PrimaryContrastText = Colors.Shades.Black,
             DrawerText = Colors.Shades.Black,
-            DrawerBackground = Colors.Grey.Lighten4,
+            DrawerBackground = Colors.Green.Darken4,
         },
         PaletteDark = new PaletteDark
         {
